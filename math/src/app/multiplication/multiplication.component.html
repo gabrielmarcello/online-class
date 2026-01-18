@@ -1,0 +1,91 @@
+<div class="multiplication-container">
+  <!-- Active Session -->
+  @if (!sessionEnded) {
+    <div class="game-area">
+      <div class="stats-bar">
+        <div class="stat correct">✓ {{ correctCount }}</div>
+        <div class="stat incorrect">✗ {{ incorrectCount }}</div>
+        @if (!infiniteMode) {
+          <div class="stat rounds">
+            Round {{ currentRound + 1 }} / {{ totalRounds }}
+          </div>
+        }
+        @if (infiniteMode) {
+          <div class="stat rounds">
+            Round {{ currentRound + 1 }}
+          </div>
+        }
+      </div>
+
+      <div class="question-card">
+        @if (currentQuestion) {
+          <div class="question">
+            {{ currentQuestion.num1 }} × {{ currentQuestion.num2 }} = ?
+          </div>
+        }
+
+        <input 
+          type="number" 
+          [(ngModel)]="userAnswer"
+          [disabled]="showNextButton"
+          placeholder="Your answer"
+          class="answer-input"
+          (keydown.enter)="submitAnswer()"
+          autofocus>
+
+        <div class="feedback" [class.correct]="feedbackType === 'correct'" [class.incorrect]="feedbackType === 'incorrect'">
+          {{ feedback }}
+        </div>
+
+        @if (showNextButton) {
+          <button 
+            (click)="nextQuestion()"
+            class="btn btn-primary">
+            Next Question
+          </button>
+        }
+      </div>
+
+      <button (click)="stopSession()" class="btn btn-secondary stop-btn">
+        Stop Session
+      </button>
+    </div>
+  }
+
+  <!-- Session Summary -->
+  @if (sessionEnded) {
+    <div class="summary-screen">
+      <h1>Session Complete!</h1>
+      
+      <div class="summary-stats">
+        <div class="summary-stat correct-stat">
+          <div class="stat-icon">✓</div>
+          <div class="stat-label">Correct</div>
+          <div class="stat-value">{{ correctCount }}</div>
+        </div>
+        
+        <div class="summary-stat incorrect-stat">
+          <div class="stat-icon">✗</div>
+          <div class="stat-label">Incorrect</div>
+          <div class="stat-value">{{ incorrectCount }}</div>
+        </div>
+        
+        <div class="summary-stat total-stat">
+          <div class="stat-icon">∑</div>
+          <div class="stat-label">Total</div>
+          <div class="stat-value">{{ correctCount + incorrectCount }}</div>
+        </div>
+      </div>
+
+      @if (correctCount + incorrectCount > 0) {
+        <div class="accuracy">
+          Accuracy: {{ ((correctCount / (correctCount + incorrectCount)) * 100).toFixed(1) }}%
+        </div>
+      }
+
+      <button (click)="startNewSession()" class="btn btn-primary btn-large">
+        Start New Session
+      </button>
+    </div>
+  }
+</div>

@@ -1,0 +1,31 @@
+<div class="settings-container">
+  <h1>Settings</h1>
+  
+  <div class="settings-form">
+    <div class="setting-item">
+      <label class="checkbox-label">
+        <input 
+          type="checkbox" 
+          [(ngModel)]="infiniteMode"
+          (change)="saveSettings()">
+        <span>Infinite Practice Mode</span>
+      </label>
+      <p class="setting-description">Practice without a limit on the number of questions</p>
+    </div>
+
+    @if (!infiniteMode) {
+      <div class="setting-item">
+        <label for="roundCount">Number of Rounds</label>
+        <input 
+          type="number" 
+          id="roundCount"
+          [(ngModel)]="roundCount"
+          (change)="saveSettings()"
+          min="1"
+          max="100"
+          class="round-input">
+        <p class="setting-description">Choose how many questions per session</p>
+      </div>
+    }
+  </div>
+</div>
