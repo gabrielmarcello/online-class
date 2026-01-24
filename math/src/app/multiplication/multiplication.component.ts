@@ -58,8 +58,8 @@ export class MultiplicationComponent implements OnInit {
   }
 
   generateQuestion() {
-    const num1 = Math.floor(Math.random() * 10) + 1;
-    const num2 = Math.floor(Math.random() * 10) + 1;
+    const num1 = Math.floor(Math.random() * 8) + 2;
+    const num2 = Math.floor(Math.random() * 8) + 2;
     this.currentQuestion = {
       num1,
       num2,
